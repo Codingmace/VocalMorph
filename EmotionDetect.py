@@ -31,9 +31,17 @@ def emoteDetect(input_dir):
     classifier = foreign_class(source="speechbrain/emotion-recognition-wav2vec2-IEMOCAP", pymodule_file="custom_interface.py", classname="CustomEncoderWav2vec2Classifier")
     wavFiles = get_all_wav_files(input_dir)
     for f in wavFiles:
-        out_prob, score, index, text_lab = classifier.classify_file(f)
-        curPath = os.path.join(os.path.dirname(f), text_lab[0])
-        createFold(curPath)
-        output_file = os.path.join(curPath , os.path.basename(f))
-        shutil.move(f , output_file)
-        
+        try:
+            out_prob, score, index, text_lab = classifier.classify_file(f)
+            curPath = os.path.join(os.path.dirname(f), text_lab[0])
+            createFold(curPath)
+            output_file = os.path.join(curPath , os.path.basename(f))
+            shutil.move(f , output_file)
+        except:
+            curPath = os.path.join(os.path.dirname(f), "neu")
+            createFold(curPath)
+            output_file = os.path.join(curPath , os.path.basename(f))
+            shutil.move(f , output_file)
+
+#input_fold = "S01E01_Audio"
+#emoteDetect(input_fold)

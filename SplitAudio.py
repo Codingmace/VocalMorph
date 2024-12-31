@@ -51,7 +51,7 @@ def splitAudio(audio_file, output_dir, subtitleFile):
                     curMessage = r
 
 
-subtitleFile = "S01E01 - My Senpai Is a Bunny Girl_jpn_Vocals_gen.srt"
-output_dir = "S01E01_Audio"
-audio_file = "S01E01 - My Senpai Is a Bunny Girl_jpn_Vocals.wav"
-splitAudio(audio_file, output_dir, subtitleFile)
+#subtitleFile = "S01E01 - My Senpai Is a Bunny Girl_jpn_Vocals_gen.srt"
+#output_dir = "tmp"
+#audio_file = "S01E01 - My Senpai Is a Bunny Girl_jpn_Vocals.wav"
+#splitAudio(audio_file, output_dir, subtitleFile)

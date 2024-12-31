@@ -21,7 +21,7 @@ def GenerateCaptions(file_path, lang):
     print(f'Transcription completed and saved to {export_transcript_path}')
 
 
-audio_path = "./S01E01 - My Senpai Is a Bunny Girl_jpn_Vocals.wav"
-GenerateCaptions(audio_path, "Japanese")
+#audio_path = "./S01E01 - My Senpai Is a Bunny Girl_jpn_Vocals.wav"
+#GenerateCaptions(audio_path, "Japanese")
 # eng = en
 # jpn = Japanese

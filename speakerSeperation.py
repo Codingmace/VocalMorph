@@ -71,5 +71,5 @@ def seperateSpeakers(input_folder):
             break
 
 # Paths to the audio files
-input_folder = "test1"
-seperateSpeakers(input_folder)
+#input_folder = "S01E01_Audio"
+#seperateSpeakers(input_folder)

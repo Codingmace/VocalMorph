@@ -1,5 +1,12 @@
 import os
 import pysrt
+import re
+
+def clean_text(rgx_list, text):
+    new_text = text
+    for rgx_match in rgx_list:
+        new_text = re.sub(rgx_match, '', new_text)
+    return new_text
 
 def find_match(wavs, number):
     for f in wavs:
@@ -33,6 +40,12 @@ def generateJSrt(audio_dir, file1, file2):
      file1 = Base Generated sutitles for the audio given
      file2 = Given Subtitle file of objective langauge to turn to
     """
+    regex_patterns = [
+    re.compile(r"</.*?>"),  # Matches </~>
+    re.compile(r"<.*?>"),   # Matches <~>
+    re.compile(r"{.*?}"),   # Matches {~}
+    re.compile(r"\[.*?]")   # Matches [~]
+    ]
     wav_files = get_all_wav_files(audio_dir)
     newName = os.path.basename(file1)
     newName = newName[0:newName.index("_")] + ".jsrt"
@@ -41,8 +54,8 @@ def generateJSrt(audio_dir, file1, file2):
     """ Merging the SRT Files now """
 
     # Read both SRT files
-    srt1 = pysrt.open(file1, encoding='utf-8')
-    srt2 = pysrt.open(file2, encoding='utf-8')
+    srt1 = pysrt.open(file1)
+    srt2 = pysrt.open(file2, encoding='cp437')
 
     # Prepare the output
     merged_lines = []
@@ -65,7 +78,8 @@ def generateJSrt(audio_dir, file1, file2):
         # Use the first file's timestamps and combine text from the second file
         original_text = sub1.text.strip()
         translated_text = " ".join(combined_text) if combined_text else "No translation available"
-        filepath = findMatch(wav_files, sub1.index)
+        filepath = find_match(wav_files, sub1.index)
+        translated_text = clean_text(regex_patterns, translated_text)
         
         # Custom format
         merged_lines.append(
@@ -80,3 +94,7 @@ def generateJSrt(audio_dir, file1, file2):
         outfile.writelines(merged_lines)
 
     print(f"Merged SRT file saved to {output_file}")
+
+#subtitle_1 = "S01E01 - My Senpai Is a Bunny Girl_jpn_Vocals_gen.srt"
+#subtitle_2 = "S01E01 - My Senpai Is a Bunny Girl_eng.srt"
+#generateJSrt("S01E01_Audio", subtitle_1, subtitle_2) 
